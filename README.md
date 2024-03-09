@@ -24,5 +24,5 @@ screening_app = FastAPI
 
 @screening_app.get("/")
 async def root():
-    return {"message": {"Hello World"}}
+    return {"message": "Hello World"}
 ```
