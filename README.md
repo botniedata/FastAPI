@@ -1,12 +1,28 @@
-### Build API using FastAPI
+# Build API using FastAPI
 ---
-
 ### Create and Activate the Python Virtual Environment
-- to create virtual environment to python
+- create virtual environment to Python
     ```
     python -m venv env
     ```
-- to activate virtual environment to python (for Powershell terminal)
+- activate virtual environment to Python (for Powershell terminal)
     ```
     .\env\scripts\Activate.ps1
     ```
+- download and install packages to Python
+    - *make sure the virtual environment is activate*
+```
+    pip install -r requirements.txt
+```
+---
+### Create an Python file
+- create a Python script named as `app.py`
+```
+from fastapi import FastAPI
+
+screening_app = FastAPI
+
+@screening_app.get("/")
+async def root():
+    return {"message": {"Hello World"}}
+```
