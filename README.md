@@ -63,3 +63,28 @@ INFO:     Application startup complete.
     ALTER TABLE <consolidated_table>
     ADD COLUMN cleaned_names VARCHAR(350);
     ```
+---
+### Create a Script Component to Clean using RegEx (C# Language)
+- add script components to `Data Flow`
+    - [x] ... adds configuration process
+
+- script for c# cleaning names
+    ```
+        private string GetCleanName(string name)
+    {
+        string cleaned_name = Regex.Replace(name, "[/-]", " "); /// replace / and - with a space
+        cleaned_name = cleaned_name.ToUpper(); /// conver sting to upper case 
+        cleaned_name = Regex.Replace(cleaned_name, "[^A-Z0-9\\s]", ""); /// replace non alphanumeric with empty string
+        cleaned_name = Regex.Replace(cleaned_name, "\\s+", " "); /// replace multiple space with a single space
+        return cleaned_name.Trim();
+    }
+    
+    public override void Input0_ProcessInputRow(Input0Buffer Row)
+    {
+        /*
+         * Add your code here
+         */
+        Row.cleanedname = GetCleanName(Row.sdnname);
+    }
+    }
+    ```

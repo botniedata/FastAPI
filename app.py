@@ -42,6 +42,7 @@ def stardardize_name(name: str) -> str:
     clean_name = re.sub("\\s+", " ", clean_name).strip()
     return clean_name
 
+
 def get_ratio(s1: str, s2: str, sort_names: bool = False) -> float | None:
     # sort names of specified
     if sort_names:
@@ -68,10 +69,10 @@ async def root():
 @screening_app.get("/screen")
 async def screen(name: str, threshold: float = 0.7):
     cleaned_name = stardardize_name(name)
-    sanctions = get_consolidated_sanctions
+    sanctions = get_consolidated_sanctions()
 
     # screened name based on the threshold
-    sanctions["similarity_score"] = sanctions["cleaned_names"].apply(get_ratio, args=[cleaned_name,])
+    sanctions["similarity_score"] = sanctions["cleaned_names"].apply(get_ratio, args=(cleaned_name,))  
     sanctions_filtered = sanctions[sanctions["similarity_score"] >= threshold]
     response = sanctions_filtered.fillna("-").to_dict(orient="records")
 
