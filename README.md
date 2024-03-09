@@ -41,3 +41,17 @@ INFO:     Application startup complete.
 ```    
 - press Ctrl + Left click on the link `http://127.0.0.1:8000` to open API Browser
     - *to make any changes save the `app.py` then reload the API Browser*
+---
+### Build our API
+- 
+---
+### Configure the Script Environment
+- open the `Activate.ps1` file from `\env\Scripts\` directory then include to the very bottom:
+```
+    -$Env:PG_HOST = "localhost"
+    -$Env:PG_PORT = "5432" 
+    -$Env:PG_DB_NAME = "dev"
+    -$Env:PG_USER = "postgres"
+    -$Env:PG_PASS = "postgres"
+```
+*restart the virtual enviroment by saving the modified file then rerun the `Activate.ps1` file*
