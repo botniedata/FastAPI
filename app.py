@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-screening_app = FastAPI 
+screening_app = FastAPI()
 
-@screening_app.get("/")
+@screening_app.get("/")  # Ensure correct indentation and parentheses
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Hello 1"}

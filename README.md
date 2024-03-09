@@ -15,12 +15,12 @@
     pip install -r requirements.txt
 ```
 ---
-### Create an Python file
+### Test the API Browser using Python FastAPI Package
 - create a Python script named as `app.py`
 ```
 from fastapi import FastAPI
 
-screening_app = FastAPI
+screening_app = FastAPI()
 
 @screening_app.get("/")
 async def root():
@@ -30,3 +30,14 @@ async def root():
 ```
 uvicorn app:screening_app --reload
 ```
+messages will run after the script indicates the API is now up and running
+```
+INFO:     Will watch for changes in these directories: ['F:\\Data Engineering\\FastAPI']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [12345] using StatReload
+INFO:     Started server process [1111]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+```    
+- press Ctrl + Left click on the link `http://127.0.0.1:8000` to open API Browser
+    - *to make any changes save the `app.py` then reload the API Browser*
