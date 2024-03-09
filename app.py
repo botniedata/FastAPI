@@ -34,7 +34,6 @@ def get_consolidated_sanctions() -> pd.DataFrame:
 
     # load consolidated data from SQL
     df = pd.read_sql("SELECT * FROM cons_consolidated", con=engine)
-
     return df
 
 def stardardize_name(name: str) -> str:
@@ -67,9 +66,15 @@ async def root():
     }
 
 @screening_app.get("/screen")
-async def screen(name: str, threshold: float = 0.75):
-    df = get_consolidated_sanctions().head().fillna("-")
-    response = df.to_dict(orient="records")
+async def screen(name: str, threshold: float = 0.7):
+    cleaned_name = stardardize_name(name)
+    sanctions = get_consolidated_sanctions
+
+    # screened name based on the threshold
+    sanctions["similarity_score"] = sanctions["cleaned_names"].apply(get_ratio, args=[cleaned_name,])
+    sanctions_filtered = sanctions[sanctions["similarity_score"] >= threshold]
+    response = sanctions_filtered.fillna("-").to_dict(orient="records")
+
     return {
         "status": "success",
         "response": response

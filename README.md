@@ -55,3 +55,11 @@ INFO:     Application startup complete.
     -$Env:PG_PASS = "postgres"
 ```
 *restart the virtual enviroment by saving the modified file then rerun the `Activate.ps1` file*
+
+---
+### Create a column from the Source Table
+- to store `cleaned_names` back to database
+    ```
+    ALTER TABLE <consolidated_table>
+    ADD COLUMN cleaned_names VARCHAR(350);
+    ```
