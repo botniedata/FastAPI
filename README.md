@@ -26,3 +26,7 @@ screening_app = FastAPI
 async def root():
     return {"message": "Hello World"}
 ```
+- run the `app.py` script with auto reloading (on PowerShell terminal)
+```
+uvicorn app:screening_app --reload
+```
