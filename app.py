@@ -80,3 +80,8 @@ async def screen(name: str, threshold: float = 0.7):
         "status": "success",
         "response": response
     }
+
+# checking logs
+@screening_app.get("/logs")
+async def log() -> dict:
+    return {"message": "hello world!"}
