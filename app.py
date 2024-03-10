@@ -4,11 +4,25 @@ from os import environ
 from sqlalchemy import create_engine, Engine
 from sqlalchemy import URL
 from rapidfuzz import fuzz
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
+from logger import logger # add logs
+from middleware import log_middleware # middleware
+from starlette.middleware.base import BaseHTTPMiddleware # basehttp middleware to app
+import asyncio
 
 # FastAPI App
-screening_app = FastAPI()
+screening_app = FastAPI() 
+screening_app.add_middleware(BaseHTTPMiddleware, dispatch=log_middleware)
+
+# logger API
+logger.info("Starting API")
+
+# sample log
+@screening_app.get("/")
+async def index() -> dict:
+    await asyncio.sleep(1.5)
+    return {"message": "Hello"}
 
 # Helper functions
 def get_consolidated_sanctions() -> pd.DataFrame:
@@ -68,6 +82,7 @@ async def root():
 
 @screening_app.get("/screen")
 async def screen(name: str, threshold: float = 0.7):
+    await asyncio.sleep(1.5)
     cleaned_name = stardardize_name(name)
     sanctions = get_consolidated_sanctions()
 
@@ -80,8 +95,3 @@ async def screen(name: str, threshold: float = 0.7):
         "status": "success",
         "response": response
     }
-
-# checking logs
-@screening_app.get("/logs")
-async def log() -> dict:
-    return {"message": "hello world!"}
