@@ -4,3 +4,4 @@
 2024-03-10 16:31:48,178 - INFO - {'url': '/screen', 'method': 'GET', 'query': QueryParams('name=Joseph+Antonio&threshold=0.7'), 'process_time': 1.7401175498962402}
 2024-03-10 16:33:31,447 - INFO - {'url': '/screen', 'method': 'GET', 'query': QueryParams('name=ABU+HASSAN+KHALED&threshold=0.7'), 'process_time': 1.916093349456787}
 2024-03-10 16:33:48,210 - INFO - {'url': '/screen', 'method': 'GET', 'query': QueryParams('name=ABU+HASSAN+KHALED&threshold=0.8'), 'process_time': 1.6264889240264893}
+2024-03-10 16:52:37,669 - INFO - Starting API
