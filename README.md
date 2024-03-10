@@ -88,3 +88,81 @@ INFO:     Application startup complete.
     }
     }
     ```
+ ---
+### FastAPI Middleware Logging
+- create an python file named `logger.py`
+
+    ```
+    # import package
+    import logging
+    import sys
+    import subprocess
+
+    # formatting
+    formatter = logging.Formatter(
+    fmt="%(asctime)s - %(levelname)s - %(message)s"
+    )
+
+    stream_handler = logging.StreamHandler(sys.stdout)
+    file_handler = logging.FileHandler('app.log')
+
+    # set formatter
+    stream_handler.setFormatter(formatter)
+    file_handler.setFormatter(formatter)
+
+    # add handler to the logger
+    logger.handlers = [stream_handler, file_handler]
+
+    # set log-level
+    logger.setLevel(logging.INFO)
+    ```
+- create an python file named `middleware.py`
+```
+from fastapi import Request
+from logger import logger
+import time
+
+# log middleware
+async def log_middleware(request: Request, call_next):
+
+    # time start
+    start = time.time()
+
+    # response dictionary
+    response = await call_next(request)
+    process_time = time.time() -  start
+    log_dict = {
+        'url': request.url.path,
+        'method': request.method,
+        'query': request.query_params,
+        'process_time': process_time
+    }
+    logger.info(log_dict, extra=log_dict) 
+
+    return response 
+```
+---
+### Additional Package to import:
+```
+from logger import logger # add logs
+from middleware import log_middleware # middleware
+from starlette.middleware.base import BaseHTTPMiddleware # basehttp middleware to app
+import asyncio
+```
+- add also the script to your `app.py`
+
+screening_app = FastAPI() 
+`screening_app.add_middleware(BaseHTTPMiddleware, dispatch=log_middleware)`
+
+```
+# logger API
+logger.info("Starting API")
+```
+
+@screening_app.get("/")
+async def index() -> dict:
+` await asyncio.sleep(1.5)`
+
+@screening_app.get("/screen")
+async def screen(name: str, threshold: float = 0.7):
+    `await asyncio.sleep(1.5)`
